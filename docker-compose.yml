@@ -1,0 +1,28 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: travel_assistant_db
+    environment:
+      POSTGRES_DB: travel_assistant
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: travel_assistant_app
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_URL: postgresql+psycopg2://postgres:${POSTGRES_PASSWORD}@db:5432/travel_assistant
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
