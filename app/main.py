@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from sqlalchemy import text
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import inspect
@@ -18,6 +19,11 @@ app = FastAPI(
 
 def initialize_database():
     """Create database tables and load knowledge if necessary."""
+
+    with engine.begin() as connection:
+        connection.execute(
+            text("CREATE EXTENSION IF NOT EXISTS vector")
+        )
 
     Base.metadata.create_all(bind=engine)
 
