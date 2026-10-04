@@ -1,43 +1,121 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gecko Travels AI Assistant</title>
+
+    <title>Gecko Travels Lanka | AI Travel Assistant</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="chat-container">
+<div class="app">
 
-    <header>
-        <h1>Gecko Travels Lanka</h1>
-        <p>AI Travel Assistant</p>
+    <!-- Header -->
+    <header class="header">
+        <div>
+            <h1>Gecko Travels Lanka</h1>
+            <p>AI Travel Operations Assistant</p>
+        </div>
+
+        <a
+            class="api-link"
+            href="/docs"
+            target="_blank"
+        >
+            API Docs ↗
+        </a>
     </header>
 
-    <main id="chat-box">
-        <div class="message assistant">
-            Hello! I'm Gecko Travels Lanka's AI travel assistant.
-            How can I help you plan your Sri Lanka trip?
+
+    <!-- Evaluation Guide -->
+    <section class="evaluation-panel">
+
+        <div class="evaluation-header">
+            <div>
+                <h2>🧪 Quick Evaluation</h2>
+                <p>
+                    Try the examples below to verify the main AI capabilities.
+                    Click a test to load the prompt into the chat.
+                </p>
+            </div>
         </div>
-    </main>
 
-    <form id="chat-form">
-        <input
-            id="message-input"
-            type="text"
-            placeholder="Ask about our travel packages..."
-            autocomplete="off"
-            required
-        >
 
-        <button type="submit">Send</button>
-    </form>
+        <div class="test-grid">
 
-</div>
+            <!-- RAG Test -->
+            <button
+                class="test-card"
+                data-prompt="What does the 7-day Sri Lanka Explorer package include?"
+            >
+                <span class="test-number">01</span>
 
-<script src="app.js"></script>
+                <strong>RAG / Knowledge Search</strong>
 
-</body>
-</html>
+                <span class="test-description">
+                    Ask about the travel package and verify that the
+                    response is grounded in the company knowledge base.
+                </span>
+
+                <span class="test-action">
+                    Try test →
+                </span>
+            </button>
+
+
+            <!-- Tool Calling Test -->
+            <button
+                class="test-card"
+                data-prompt="My name is Ali and my phone number is 03001234567. Please have someone from the travel team contact me about a Sri Lanka trip."
+            >
+                <span class="test-number">02</span>
+
+                <strong>AI Tool Calling / Lead</strong>
+
+                <span class="test-description">
+                    Ask the assistant to contact you and verify that
+                    the AI can trigger the lead creation tool.
+                </span>
+
+                <span class="test-action">
+                    Try test →
+                </span>
+            </button>
+
+
+            <!-- Fallback Test -->
+            <button
+                class="test-card"
+                data-prompt="Do you provide helicopter transportation from Colombo to Ella?"
+            >
+                <span class="test-number">03</span>
+
+                <strong>Safe Fallback</strong>
+
+                <span class="test-description">
+                    Ask about something outside the knowledge base.
+                    The assistant should not invent an answer.
+                </span>
+
+                <span class="test-action">
+                    Try test →
+                </span>
+            </button>
+
+
+            <!-- Conversation Test -->
+            <button
+                class="test-card"
+                data-prompt="What are the destinations included in the 7-day Sri Lanka Explorer package?"
+            >
+                <span class="test-number">04</span>
+
+                <strong>Conversation Persistence</strong>
+
+                <span class="test-description">
+                    Send this message, then ask a follow-up question
+                    to
