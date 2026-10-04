@@ -1,14 +1,27 @@
 
 const chatForm = document.getElementById("chat-form");
+
 const messageInput = document.getElementById("message-input");
+
 const chatBox = document.getElementById("chat-box");
+
 const sendButton = document.getElementById("send-button");
+
+const testCards = document.querySelectorAll(".test-card");
+
+
+/*
+    The session ID is kept in the browser.
+
+    This means multiple messages from the same browser
+    session are sent to the same backend conversation.
+*/
 
 let sessionId = null;
 
 
 /* =========================
-   Add message to chat
+   Add message
 ========================= */
 
 function addMessage(content, role) {
@@ -26,10 +39,12 @@ function addMessage(content, role) {
 
 
 /* =========================
-   Loading indicator
+   Loading message
 ========================= */
 
 function showLoading() {
+
+    removeLoading();
 
     const loading = document.createElement("div");
 
@@ -38,7 +53,9 @@ function showLoading() {
     loading.className = "message assistant";
 
     loading.innerHTML = `
-        <span class="typing">Assistant is thinking...</span>
+        <span class="typing">
+            Assistant is thinking...
+        </span>
     `;
 
     chatBox.appendChild(loading);
@@ -49,7 +66,8 @@ function showLoading() {
 
 function removeLoading() {
 
-    const loading = document.getElementById("loading-message");
+    const loading =
+        document.getElementById("loading-message");
 
     if (loading) {
         loading.remove();
@@ -58,61 +76,139 @@ function removeLoading() {
 
 
 /* =========================
-   Send message
+   Set UI loading state
+========================= */
+
+function setLoadingState(isLoading) {
+
+    sendButton.disabled = isLoading;
+
+    messageInput.disabled = isLoading;
+
+    testCards.forEach(function(card) {
+        card.disabled = isLoading;
+    });
+
+}
+
+
+/* =========================
+   Send message to FastAPI
 ========================= */
 
 async function sendMessage(message) {
 
-    if (!message.trim()) {
+    const cleanMessage = message.trim();
+
+    if (!cleanMessage) {
         return;
     }
 
 
-    addMessage(message, "user");
+    /*
+        Show the customer's message immediately.
+    */
+
+    addMessage(
+        cleanMessage,
+        "user"
+    );
+
+
+    /*
+        Clear the input.
+    */
 
     messageInput.value = "";
 
-    sendButton.disabled = true;
 
-    messageInput.disabled = true;
+    /*
+        Disable controls while waiting
+        for the backend.
+    */
+
+    setLoadingState(true);
 
     showLoading();
 
 
     try {
 
-        const response = await fetch("/api/v1/chat", {
+        const response = await fetch(
+            "/api/v1/chat",
+            {
+                method: "POST",
 
-            method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                body: JSON.stringify({
+                    message: cleanMessage,
 
-            body: JSON.stringify({
-                message: message,
-                session_id: sessionId
-            })
+                    session_id: sessionId
+                })
+            }
+        );
 
-        });
 
+        /*
+            Handle HTTP errors.
+        */
 
         if (!response.ok) {
 
-            throw new Error(
-                `Request failed with status ${response.status}`
-            );
+            let errorMessage =
+                `Request failed with status ${response.status}.`;
 
+            try {
+
+                const errorData =
+                    await response.json();
+
+                if (errorData.detail) {
+                    errorMessage =
+                        `Request failed: ${errorData.detail}`;
+                }
+
+            } catch (error) {
+                /*
+                    Ignore JSON parsing errors.
+                */
+            }
+
+            throw new Error(errorMessage);
         }
 
 
-        const data = await response.json();
+        /*
+            Convert response to JSON.
+        */
 
+        const data =
+            await response.json();
+
+
+        /*
+            Save the session ID returned by FastAPI.
+
+            Future messages from this browser session
+            will use the same ID.
+        */
 
         sessionId = data.session_id;
 
 
+        /*
+            Remove loading indicator.
+        */
+
         removeLoading();
+
+
+        /*
+            Display assistant response.
+        */
 
         addMessage(
             data.message,
@@ -122,64 +218,97 @@ async function sendMessage(message) {
 
     } catch (error) {
 
+        console.error(
+            "Chat request failed:",
+            error
+        );
+
+
         removeLoading();
 
-        console.error(error);
 
         addMessage(
-            "Sorry, something went wrong while contacting the assistant. Please try again.",
+            "Sorry, the assistant could not process this request. Please try again.",
             "assistant"
         );
 
+
     } finally {
 
-        sendButton.disabled = false;
-
-        messageInput.disabled = false;
+        setLoadingState(false);
 
         messageInput.focus();
 
     }
+
 }
 
 
 /* =========================
-   Chat form submit
+   Normal chat submission
 ========================= */
 
-chatForm.addEventListener("submit", function(event) {
+chatForm.addEventListener(
+    "submit",
+    function(event) {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    const message = messageInput.value.trim();
+        const message =
+            messageInput.value.trim();
 
-    sendMessage(message);
+        sendMessage(message);
 
-});
+    }
+);
 
 
 /* =========================
-   Evaluation test buttons
+   Evaluation buttons
 ========================= */
 
-const testCards = document.querySelectorAll(".test-card");
+testCards.forEach(
+    function(card) {
+
+        card.addEventListener(
+            "click",
+            function() {
+
+                const prompt =
+                    card.dataset.prompt;
+
+                /*
+                    Automatically execute the
+                    selected evaluation test.
+                */
+
+                sendMessage(prompt);
+
+            }
+        );
+
+    }
+);
 
 
-testCards.forEach(function(card) {
+/* =========================
+   Enter key
+========================= */
 
-    card.addEventListener("click", function() {
+messageInput.addEventListener(
+    "keydown",
+    function(event) {
 
-        const prompt = card.dataset.prompt;
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
 
-        messageInput.value = prompt;
+            event.preventDefault();
 
-        messageInput.focus();
+            chatForm.requestSubmit();
 
-        messageInput.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+        }
 
-    });
-
-});
+    }
+);

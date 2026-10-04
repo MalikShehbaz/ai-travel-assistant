@@ -5,6 +5,7 @@
     padding: 0;
 }
 
+
 body {
     font-family:
         -apple-system,
@@ -15,71 +16,94 @@ body {
         sans-serif;
 
     background: #f4f6f8;
+
     color: #1f2937;
+
     min-height: 100vh;
 }
 
 
 .app {
     width: 100%;
+
     max-width: 1050px;
+
     margin: 0 auto;
+
     padding: 28px 20px 40px;
 }
 
 
 /* =========================
-   Header
+   HEADER
 ========================= */
 
 .header {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     margin-bottom: 22px;
 }
 
+
 .header h1 {
     font-size: 27px;
+
     font-weight: 700;
+
     color: #111827;
 }
 
+
 .header p {
     margin-top: 5px;
+
     color: #6b7280;
+
     font-size: 14px;
 }
 
+
 .api-link {
     text-decoration: none;
+
     color: #2563eb;
+
     font-size: 14px;
+
     font-weight: 600;
 
     border: 1px solid #dbe3ef;
+
     background: white;
 
     padding: 9px 14px;
+
     border-radius: 8px;
 
     transition: 0.2s;
 }
 
+
 .api-link:hover {
     background: #eff6ff;
+
+    border-color: #bfdbfe;
 }
 
 
 /* =========================
-   Evaluation Panel
+   EVALUATION PANEL
 ========================= */
 
 .evaluation-panel {
     background: white;
 
     border: 1px solid #e5e7eb;
+
     border-radius: 14px;
 
     padding: 22px;
@@ -90,19 +114,28 @@ body {
         0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+
 .evaluation-header h2 {
     font-size: 18px;
+
     color: #111827;
 }
 
+
 .evaluation-header p {
-    margin-top: 5px;
+    margin-top: 6px;
 
     color: #6b7280;
+
     font-size: 13px;
+
     line-height: 1.5;
 }
 
+
+/* =========================
+   TEST CARDS
+========================= */
 
 .test-grid {
     display: grid;
@@ -115,16 +148,18 @@ body {
 }
 
 
-/* Test cards */
-
 .test-card {
     position: relative;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: flex-start;
 
     text-align: left;
+
+    width: 100%;
 
     background: #fafafa;
 
@@ -136,24 +171,45 @@ body {
 
     cursor: pointer;
 
+    font-family: inherit;
+
     transition:
         transform 0.15s,
         border-color 0.15s,
-        background 0.15s;
-
-    font-family: inherit;
+        background 0.15s,
+        box-shadow 0.15s;
 }
 
+
 .test-card:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 
     border-color: #93c5fd;
 
     background: #f8fbff;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.05);
 }
+
+
+.test-card:active {
+    transform: translateY(0);
+}
+
+
+.test-card:disabled {
+    opacity: 0.6;
+
+    cursor: wait;
+
+    transform: none;
+}
+
 
 .test-number {
     font-size: 11px;
+
     font-weight: 700;
 
     color: #2563eb;
@@ -161,10 +217,13 @@ body {
     margin-bottom: 7px;
 }
 
+
 .test-card strong {
     font-size: 14px;
+
     color: #111827;
 }
+
 
 .test-description {
     margin-top: 7px;
@@ -176,22 +235,25 @@ body {
     line-height: 1.5;
 }
 
+
 .test-action {
     margin-top: 12px;
 
     color: #2563eb;
 
     font-size: 12px;
+
     font-weight: 600;
 }
 
 
 /* =========================
-   Verification Summary
+   VERIFICATION SUMMARY
 ========================= */
 
 .verification-summary {
     display: flex;
+
     flex-wrap: wrap;
 
     gap: 10px 22px;
@@ -199,6 +261,7 @@ body {
     border-top: 1px solid #eeeeee;
 
     margin-top: 20px;
+
     padding-top: 15px;
 
     color: #4b5563;
@@ -206,8 +269,10 @@ body {
     font-size: 12px;
 }
 
+
 .check {
     color: #16a34a;
+
     font-weight: 700;
 
     margin-right: 5px;
@@ -215,11 +280,12 @@ body {
 
 
 /* =========================
-   Database Note
+   DATABASE NOTE
 ========================= */
 
 .database-note {
     display: flex;
+
     align-items: flex-start;
 
     gap: 12px;
@@ -235,15 +301,20 @@ body {
     margin-bottom: 18px;
 }
 
+
 .database-icon {
     font-size: 18px;
+
     color: #475569;
 }
 
+
 .database-note strong {
     font-size: 13px;
+
     color: #334155;
 }
+
 
 .database-note p {
     margin-top: 3px;
@@ -257,7 +328,7 @@ body {
 
 
 /* =========================
-   Chat Container
+   CHAT
 ========================= */
 
 .chat-container {
@@ -282,13 +353,17 @@ body {
     background: white;
 }
 
+
 .chat-header h2 {
     font-size: 16px;
+
     color: #111827;
 }
 
+
 .status {
     display: inline-flex;
+
     align-items: center;
 
     gap: 6px;
@@ -300,8 +375,10 @@ body {
     color: #16a34a;
 }
 
+
 .status-dot {
     width: 7px;
+
     height: 7px;
 
     border-radius: 50%;
@@ -311,7 +388,7 @@ body {
 
 
 /* =========================
-   Chat Messages
+   CHAT BOX
 ========================= */
 
 .chat-box {
@@ -323,6 +400,7 @@ body {
 
     background: #fafafa;
 }
+
 
 .message {
     max-width: 78%;
@@ -338,17 +416,23 @@ body {
     line-height: 1.55;
 
     white-space: pre-wrap;
+
+    word-wrap: break-word;
 }
 
+
 .message.assistant {
-    background: #ffffff;
+    background: white;
 
     border: 1px solid #e5e7eb;
 
     color: #374151;
 
     margin-right: auto;
+
+    border-bottom-left-radius: 3px;
 }
+
 
 .message.user {
     background: #2563eb;
@@ -360,12 +444,10 @@ body {
     border-bottom-right-radius: 3px;
 }
 
-.message.assistant {
-    border-bottom-left-radius: 3px;
-}
 
-
-/* Loading */
+/* =========================
+   LOADING
+========================= */
 
 .typing {
     color: #6b7280;
@@ -377,7 +459,7 @@ body {
 
 
 /* =========================
-   Chat Form
+   CHAT FORM
 ========================= */
 
 .chat-form {
@@ -391,6 +473,7 @@ body {
 
     background: white;
 }
+
 
 .chat-form input {
     flex: 1;
@@ -408,12 +491,14 @@ body {
     font-family: inherit;
 }
 
+
 .chat-form input:focus {
     border-color: #60a5fa;
 
     box-shadow:
         0 0 0 2px rgba(96, 165, 250, 0.12);
 }
+
 
 .chat-form button {
     border: none;
@@ -437,9 +522,11 @@ body {
     transition: 0.2s;
 }
 
+
 .chat-form button:hover {
     background: #1d4ed8;
 }
+
 
 .chat-form button:disabled {
     opacity: 0.6;
@@ -449,7 +536,7 @@ body {
 
 
 /* =========================
-   Footer
+   FOOTER
 ========================= */
 
 .footer {
@@ -468,7 +555,7 @@ body {
 
 
 /* =========================
-   Responsive
+   MOBILE
 ========================= */
 
 @media (max-width: 700px) {
@@ -477,19 +564,23 @@ body {
         padding: 18px 12px 30px;
     }
 
+
     .header {
         align-items: flex-start;
 
         gap: 12px;
     }
 
+
     .header h1 {
         font-size: 22px;
     }
 
+
     .test-grid {
         grid-template-columns: 1fr;
     }
+
 
     .verification-summary {
         flex-direction: column;
@@ -497,17 +588,21 @@ body {
         gap: 7px;
     }
 
+
     .chat-box {
         height: 420px;
     }
 
+
     .message {
         max-width: 88%;
     }
+
 
     .footer {
         flex-direction: column;
 
         gap: 5px;
     }
+
 }

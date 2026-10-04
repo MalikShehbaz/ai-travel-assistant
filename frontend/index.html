@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +7,7 @@
 
     <title>Gecko Travels Lanka | AI Travel Assistant</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/chat/style.css">
 </head>
 
 <body>
@@ -16,6 +16,7 @@
 
     <!-- Header -->
     <header class="header">
+
         <div>
             <h1>Gecko Travels Lanka</h1>
             <p>AI Travel Operations Assistant</p>
@@ -28,6 +29,7 @@
         >
             API Docs ↗
         </a>
+
     </header>
 
 
@@ -35,87 +37,240 @@
     <section class="evaluation-panel">
 
         <div class="evaluation-header">
-            <div>
-                <h2>🧪 Quick Evaluation</h2>
-                <p>
-                    Try the examples below to verify the main AI capabilities.
-                    Click a test to load the prompt into the chat.
-                </p>
-            </div>
+
+            <h2>🧪 Quick Evaluation</h2>
+
+            <p>
+                Click a test below. The example prompt will be sent
+                automatically and demonstrates a different capability
+                of the AI system.
+            </p>
+
         </div>
 
 
         <div class="test-grid">
 
-            <!-- RAG Test -->
+            <!-- RAG -->
             <button
+                type="button"
                 class="test-card"
                 data-prompt="What does the 7-day Sri Lanka Explorer package include?"
             >
+
                 <span class="test-number">01</span>
 
                 <strong>RAG / Knowledge Search</strong>
 
                 <span class="test-description">
-                    Ask about the travel package and verify that the
-                    response is grounded in the company knowledge base.
+                    Tests semantic search against the company's
+                    travel knowledge base.
                 </span>
 
                 <span class="test-action">
-                    Try test →
+                    Run test →
                 </span>
+
             </button>
 
 
-            <!-- Tool Calling Test -->
+            <!-- Lead Tool -->
             <button
+                type="button"
                 class="test-card"
                 data-prompt="My name is Ali and my phone number is 03001234567. Please have someone from the travel team contact me about a Sri Lanka trip."
             >
+
                 <span class="test-number">02</span>
 
                 <strong>AI Tool Calling / Lead</strong>
 
                 <span class="test-description">
-                    Ask the assistant to contact you and verify that
-                    the AI can trigger the lead creation tool.
+                    Tests Gemini function calling and creation
+                    of a customer lead in PostgreSQL.
                 </span>
 
                 <span class="test-action">
-                    Try test →
+                    Run test →
                 </span>
+
             </button>
 
 
-            <!-- Fallback Test -->
+            <!-- Fallback -->
             <button
+                type="button"
                 class="test-card"
                 data-prompt="Do you provide helicopter transportation from Colombo to Ella?"
             >
+
                 <span class="test-number">03</span>
 
                 <strong>Safe Fallback</strong>
 
                 <span class="test-description">
-                    Ask about something outside the knowledge base.
-                    The assistant should not invent an answer.
+                    Tests whether the assistant avoids inventing
+                    unsupported company information.
                 </span>
 
                 <span class="test-action">
-                    Try test →
+                    Run test →
                 </span>
+
             </button>
 
 
-            <!-- Conversation Test -->
+            <!-- Conversation -->
             <button
+                type="button"
                 class="test-card"
                 data-prompt="What are the destinations included in the 7-day Sri Lanka Explorer package?"
             >
+
                 <span class="test-number">04</span>
 
                 <strong>Conversation Persistence</strong>
 
                 <span class="test-description">
-                    Send this message, then ask a follow-up question
-                    to
+                    Tests session-based conversation storage.
+                    Send a follow-up message after this test.
+                </span>
+
+                <span class="test-action">
+                    Run test →
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- What is being demonstrated -->
+        <div class="verification-summary">
+
+            <div>
+                <span class="check">✓</span>
+                RAG + pgvector
+            </div>
+
+            <div>
+                <span class="check">✓</span>
+                Gemini function calling
+            </div>
+
+            <div>
+                <span class="check">✓</span>
+                PostgreSQL persistence
+            </div>
+
+            <div>
+                <span class="check">✓</span>
+                Safe fallback behavior
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Database Note -->
+    <section class="database-note">
+
+        <div class="database-icon">
+            ▣
+        </div>
+
+        <div>
+
+            <strong>Data persistence</strong>
+
+            <p>
+                RAG knowledge, customer leads, and conversation
+                messages are persisted in PostgreSQL with pgvector.
+                The database itself is not publicly exposed.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Chat -->
+    <main class="chat-container">
+
+        <div class="chat-header">
+
+            <div>
+
+                <h2>Travel Assistant</h2>
+
+                <span class="status">
+                    <span class="status-dot"></span>
+                    Online
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Messages -->
+        <div
+            id="chat-box"
+            class="chat-box"
+        >
+
+            <div class="message assistant">
+                Hello! I'm Gecko Travels Lanka's AI travel assistant.
+                How can I help you plan your Sri Lanka trip?
+            </div>
+
+        </div>
+
+
+        <!-- Input -->
+        <form
+            id="chat-form"
+            class="chat-form"
+        >
+
+            <input
+                id="message-input"
+                type="text"
+                placeholder="Ask about our travel packages..."
+                autocomplete="off"
+                required
+            >
+
+            <button
+                id="send-button"
+                type="submit"
+            >
+                Send
+            </button>
+
+        </form>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <span>
+            AI Travel Operations Assistant • MVP
+        </span>
+
+        <span>
+            FastAPI • Gemini • PostgreSQL • pgvector
+        </span>
+
+    </footer>
+
+</div>
+
+
+<script src="/chat/app.js"></script>
+
+</body>
+</html>
